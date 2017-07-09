@@ -88,14 +88,14 @@ function deleteTask(taskId) {
 //Here is the AJAX request to the server to update the status of a task:
 function completeTask(updateTask) {
 
-$.ajax({
-  url: '/todos',
-  type: 'PUT',
-  data: updateTask,
-  success: function(response) {
-    refreshList();
-  }
-});
+  $.ajax({
+    url: '/todos',
+    type: 'PUT',
+    data: updateTask,
+    success: function(response) {
+      refreshList();
+    }
+  });
 }
 
 // Append array to the DOM
