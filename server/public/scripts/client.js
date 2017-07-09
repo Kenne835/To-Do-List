@@ -20,12 +20,12 @@ function addClickHandlers() {
 
   // Function called when delete button is clicked
   $('#viewTasks').on('click', '.deleteBtn', function(){
-    // We attached the bookid as data on our button
-    //When the delete button is clicked, the deleteBook function
-    //is called and passes in bookId as an argument
     var taskId = $(this).data('taskid');
     console.log($(this));
     console.log('Delete task with id of', taskId);
+    if (!confirm("Do you really want to delete this?")){
+    return false;
+    }
     deleteTask(taskId);
   });
 
@@ -92,11 +92,9 @@ $.ajax({
 
 // Append array to the DOM
 function appendToDom(taskList) {
-  // Remove tasks that currently exist in the table
   $('#viewTasks').empty();
   for(var i = 0; i < taskList.length; i += 1) {
     var list = taskList[i];
-    // For each task, append a new row to our table
     $tr = $('<tr></tr>');
     $tr.data('list', list);
     $tr.append('<td>' + list.id + '</td>');
