@@ -1,0 +1,25 @@
+{
+  "name": "weekend_challenge_three",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": { "start" : "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kenne835/weekend_challenge_three.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kenne835/weekend_challenge_three/issues"
+  },
+  "homepage": "https://github.com/Kenne835/weekend_challenge_three#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "jquery": "^3.2.1",
+    "pg": "^6.4.0"
+  }
+}
