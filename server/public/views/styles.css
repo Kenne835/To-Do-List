@@ -1,4 +1,52 @@
+html {
+  font-family: "Amatica SC";
+  font-size: 25px;
+  background: url(http://icanbecreative.com/resources/files/articles/40-high-resolution-wallpapers-for-minimalist-lovers/sources/flying-turtle.png);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#submitBtn {
+  font-size: 15px;
+  background-color: #006600;
+  color: white;
+  font-family: "Amatica SC";
+  border-radius: 8px;
+}
+
+.deleteBtn {
+  background-color: #b30000;
+  color: white;
+  font-size: 15px;
+  font-family: "Amatica SC";
+  border-radius: 8px;
+}
 
 .yes {
   visibility: hidden;
+  background-color: #262626;
+  color: white;
+  font-size: 15px;
+  font-family: "Amatica SC";
+  border-radius: 8px;
+}
+
+.no {
+  background-color: #262626;
+  color: white;
+  font-size: 15px;
+  font-family: "Amatica SC";
+  border-radius: 8px;
+}
+
+table {
+  text-align: center;
+}
+
+::-webkit-input-placeholder {
+  font-family: "Amatica SC";
+  color: black;
+  font-size: 20px;
 }
