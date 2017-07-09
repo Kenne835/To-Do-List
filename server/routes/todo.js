@@ -26,7 +26,7 @@ router.get('/', function(req, res){
           console.log('Error making query');
           res.sendStatus(500);
         } else {
-          res.send({books: result.rows});
+          res.send({tasks: result.rows});
         }
       }); // end query
     } // end if
@@ -34,8 +34,8 @@ router.get('/', function(req, res){
 }); // end of GET
 
 router.post('/', function(req, res) {
-  var book = req.body;
-  console.log(book);
+  var todo = req.body;
+  console.log(todo);
   pool.connect(function(errorConnectingToDatabase, db, done){
     if(errorConnectingToDatabase) {
       console.log('Error connecting to the database.');
@@ -43,7 +43,7 @@ router.post('/', function(req, res) {
     } else {
       var queryText = 'INSERT INTO "todolist" ("task", "completionstatus")' +
                       ' VALUES ($1, $2);';
-      db.query(queryText, [book.task, book.status], function(errorMakingQuery, result){
+      db.query(queryText, [todo.task, todo.status], function(errorMakingQuery, result){
         done();
         if(errorMakingQuery) {
           console.log('Attempted to query with', queryText);

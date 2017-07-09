@@ -1,11 +1,9 @@
-var editingBook = false;
-var editingBookId; // Empty for now
-var selectedBook;
+var selectedTask;
 //document ready here:
 $(document).ready(function(){
   console.log('jQuery sourced.');
   //calling the functions:
-  refreshBooks();
+  refreshList();
   addClickHandlers();
 });
 //adding eventlisteners to the buttons
@@ -14,17 +12,10 @@ function addClickHandlers() {
   // Function called when the submit button is clicked
   $('#submitBtn').on('click', function(){
     console.log('Submit button clicked.');
-    var book = {};
-    book.task = $('#task').val();
-    book.status = $('#status').val();
-//if editingBook is true, the book.id becomes editingBookId,
-//otherwise addBook runs and passes book in as an argument
-    if(editingBook) {
-      book.id = editingBookId;
-      updateBook(book);
-    } else {
-      addBook(book);
-    }
+    var todolist = {};
+    todolist.task = $('#task').val();
+    todolist.status = $('#status').val();
+  addTask(todolist);
   });
 
   // Function called when delete button is clicked
@@ -32,10 +23,10 @@ function addClickHandlers() {
     // We attached the bookid as data on our button
     //When the delete button is clicked, the deleteBook function
     //is called and passes in bookId as an argument
-    var bookId = $(this).data('bookid');
+    var taskId = $(this).data('taskid');
     console.log($(this));
-    console.log('Delete book with id of', bookId);
-    deleteBook(bookId);
+    console.log('Delete task with id of', taskId);
+    deleteTask(taskId);
   });
 
   $('#viewTasks').on('click', '.completeBtn', function () {
@@ -55,67 +46,64 @@ function addClickHandlers() {
      type: 'PUT',
      data: updateTask,
      success: function(response) {
-       refreshBooks();
+       refreshList();
      }
    });
   });
 }
 
 // CREATE a.k.a. POST a.k.a. INSERT
-function addBook(bookToAdd) {
+function addTask(taskToAdd) {
   $.ajax({
     type: 'POST',
     url: '/todos',
-    data: bookToAdd,
+    data: taskToAdd,
     success: function(response) {
       console.log('Response from server.');
-      refreshBooks();
+      refreshList();
     }
   });
 }
 
 // READ a.k.a. GET a.k.a. SELECT
-function refreshBooks() {
+function refreshList() {
   $.ajax({
     type: 'GET',
     url: '/todos',
     success: function(response) {
       console.log(response);
-      appendToDom(response.books);
+      appendToDom(response.tasks);
     }
   });
 }
 
 // DELETE
-function deleteBook(bookId) {
-  // When using URL params, your url would be...
-  // '/books/' + bookId
+function deleteTask(taskId) {
 
-  // YOUR AJAX CODE HERE
 $.ajax({
   type: 'DELETE',
-  url: '/todos/' + bookId,
+  url: '/todos/' + taskId,
   success: function(response) {
     console.log(response);
-    refreshBooks();
+    refreshList();
   }
 });
 }
 
-// Append array of books to the DOM
-function appendToDom(books) {
-  // Remove books that currently exist in the table
+// Append array to the DOM
+function appendToDom(taskList) {
+  // Remove tasks that currently exist in the table
   $('#viewTasks').empty();
-  for(var i = 0; i < books.length; i += 1) {
-    var book = books[i];
-    // For each book, append a new row to our table
+  for(var i = 0; i < taskList.length; i += 1) {
+    var list = taskList[i];
+    // For each task, append a new row to our table
     $tr = $('<tr></tr>');
-    $tr.data('book', book);
-    $tr.append('<td>' + book.id + '</td>');
-    $tr.append('<td>' + book.task + '</td>');
-    $tr.append('<td>' + book.completionstatus + '</td>');
-    $tr.append('<td><button class="completeBtn ' + book.completionstatus + '" data-taskid="' + book.id + '" data-complete="' + book.completionstatus + '">This task is now complete?</button></td>');
-    $tr.append('<td><button class="deleteBtn" data-bookid="' + book.id + '">Delete</button></td>');
+    $tr.data('list', list);
+    $tr.append('<td>' + list.id + '</td>');
+    $tr.append('<td>' + list.task + '</td>');
+    $tr.append('<td>' + list.completionstatus + '</td>');
+    $tr.append('<td><button class="completeBtn ' + list.completionstatus + '" data-taskid="' + list.id + '" data-complete="' + list.completionstatus + '">This task is now complete?</button></td>');
+    $tr.append('<td><button class="deleteBtn" data-taskid="' + list.id + '">Delete</button></td>');
     $('#viewTasks').append($tr);
   }
 }
