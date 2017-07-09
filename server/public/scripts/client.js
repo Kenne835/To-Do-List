@@ -1,4 +1,3 @@
-var selectedTask;
 //document ready here:
 $(document).ready(function(){
   console.log('jQuery sourced.');
@@ -6,7 +5,8 @@ $(document).ready(function(){
   refreshList();
   addClickHandlers();
 });
-//adding eventlisteners to the buttons
+
+//adding eventlisteners to the buttons:
 function addClickHandlers() {
   console.log('Listeners added.');
   // Function called when the submit button is clicked
@@ -15,44 +15,37 @@ function addClickHandlers() {
     var todolist = {};
     todolist.task = $('#task').val();
     todolist.status = $('#status').val();
-  addTask(todolist);
-  });
+    addTask(todolist);
+  }); //end of submitBtn
 
-  // Function called when delete button is clicked
+  // Function called when delete button is clicked:
   $('#viewTasks').on('click', '.deleteBtn', function(){
     var taskId = $(this).data('taskid');
     console.log($(this));
     console.log('Delete task with id of', taskId);
     if (!confirm("Do you really want to delete this?")){
-    return false;
+      return false;
     }
     deleteTask(taskId);
-  });
+  }); //end of deleteBtn
 
+  //Function called when complete button is clicked:
   $('#viewTasks').on('click', '.completeBtn', function () {
-   console.log('complete button clicked');
-   var updateTask = {};
-   updateTask.id = $(this).data('taskid');
-   updateTask.status = $(this).data('complete');
-   if (updateTask.status == "yes"){
-     updateTask.status = "no";
-   } else if (updateTask.status == "no") {
-     updateTask.status = "yes";
-   }
-   console.log(updateTask);
+    console.log('complete button clicked');
+    var updateTask = {};
+    updateTask.id = $(this).data('taskid');
+    updateTask.status = $(this).data('complete');
+    if (updateTask.status == "yes"){
+      updateTask.status = "no";
+    } else if (updateTask.status == "no") {
+      updateTask.status = "yes";
+    }
+    console.log(updateTask);
+    completeTask(updateTask);
+  }); //end of completeBtn
+} //end of addClickHandlers function
 
-   $.ajax({
-     url: '/todos',
-     type: 'PUT',
-     data: updateTask,
-     success: function(response) {
-       refreshList();
-     }
-   });
-  });
-}
-
-// CREATE a.k.a. POST a.k.a. INSERT
+//Here is the AJAX request to post to server to add new task to database:
 function addTask(taskToAdd) {
   $.ajax({
     type: 'POST',
@@ -63,9 +56,9 @@ function addTask(taskToAdd) {
       refreshList();
     }
   });
-}
+} //end of addTask function
 
-// READ a.k.a. GET a.k.a. SELECT
+//Here is the AJAX request to get array from server:
 function refreshList() {
   $.ajax({
     type: 'GET',
@@ -73,18 +66,33 @@ function refreshList() {
     success: function(response) {
       console.log(response);
       appendToDom(response.tasks);
+      $('#task').val('');
+      $('#status').val('');
     }
   });
-}
+} //end of refreshList function
 
-// DELETE
+// Here is the AJAX request to the server to delete task from database:
 function deleteTask(taskId) {
 
+  $.ajax({
+    type: 'DELETE',
+    url: '/todos/' + taskId,
+    success: function(response) {
+      console.log(response);
+      refreshList();
+    }
+  });
+} //end of deleteTask function
+
+//Here is the AJAX request to the server to update the status of a task:
+function completeTask(updateTask) {
+
 $.ajax({
-  type: 'DELETE',
-  url: '/todos/' + taskId,
+  url: '/todos',
+  type: 'PUT',
+  data: updateTask,
   success: function(response) {
-    console.log(response);
     refreshList();
   }
 });
@@ -100,8 +108,9 @@ function appendToDom(taskList) {
     $tr.append('<td>' + list.id + '</td>');
     $tr.append('<td>' + list.task + '</td>');
     $tr.append('<td>' + list.completionstatus + '</td>');
-    $tr.append('<td><button class="completeBtn ' + list.completionstatus + '" data-taskid="' + list.id + '" data-complete="' + list.completionstatus + '">This task is now complete?</button></td>');
+    $tr.append('<td><button class="completeBtn ' + list.completionstatus + '" data-taskid="' + list.id +
+               '" data-complete="' + list.completionstatus + '">This task is now complete?</button></td>');
     $tr.append('<td><button class="deleteBtn" data-taskid="' + list.id + '">Delete</button></td>');
     $('#viewTasks').append($tr);
   }
-}
+} //end of appendToDom function

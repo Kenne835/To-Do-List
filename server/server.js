@@ -7,6 +7,7 @@ var tasksRoute = require('./routes/todo.js');
 
 app.use(bodyParser.urlencoded({extended: true}));
 
+//Here's the route to my server side logic:
 app.use('/todos', tasksRoute);
 
 // Serve back static files by default
