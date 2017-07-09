@@ -33,6 +33,14 @@ html {
   border-radius: 8px;
 }
 
+.yes:after {
+  visibility: visible;
+  float: center;
+  font-size: 25px;
+  color: black;
+  content: 'Hooray!';
+}
+
 .no {
   background-color: #262626;
   color: white;
