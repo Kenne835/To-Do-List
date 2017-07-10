@@ -3,6 +3,7 @@ var router = express.Router();
 var pg = require('pg');
 
 var poolModule = require('../modules/pool.js');
+var pool = poolModule;
 
 //GET request to send tasks from database to client side:
 router.get('/', function(req, res){
