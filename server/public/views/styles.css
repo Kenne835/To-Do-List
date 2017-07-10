@@ -42,7 +42,33 @@ html {
   margin: auto;
 }
 
+.y {
+  visibility: hidden;
+  background-color: #262626;
+  color: white;
+  font-size: 15px;
+  font-family: "Amatica SC";
+  border-radius: 8px;
+}
+
+.y:after {
+  visibility: visible;
+  float: center;
+  font-size: 25px;
+  color: black;
+  content: 'Hooray!';
+  margin: auto;
+}
+
 .no {
+  background-color: #262626;
+  color: white;
+  font-size: 15px;
+  font-family: "Amatica SC";
+  border-radius: 8px;
+}
+
+.n {
   background-color: #262626;
   color: white;
   font-size: 15px;
