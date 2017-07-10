@@ -2,15 +2,7 @@ var express = require('express');
 var router = express.Router();
 var pg = require('pg');
 
-var config = {
-  database: 'antares', // name of your database
-  host: 'localhost', // where is your database?
-  port: 5432, // port for the database
-  max: 10, // how many connections at one time?
-  idleTimeoutMillis: 30000 // 30 second time out
-};
-
-var pool = new pg.Pool(config);
+var poolModule = require('../modules/pool.js');
 
 //GET request to send tasks from database to client side:
 router.get('/', function(req, res){
@@ -24,7 +16,7 @@ router.get('/', function(req, res){
         done();
         if(errorMakingQuery) {
           console.log('Attempted to query with', queryText);
-          console.log('Error making query');
+          console.log('Error making SELECT * FROM query');
           res.sendStatus(500);
         } else {
           res.send({tasks: result.rows});
@@ -49,7 +41,7 @@ router.post('/', function(req, res) {
         done();
         if(errorMakingQuery) {
           console.log('Attempted to query with', queryText);
-          console.log('Error making query');
+          console.log('Error making INSERT INTO query');
           res.sendStatus(500);
         } else {
           res.sendStatus(200);
@@ -74,7 +66,7 @@ router.delete('/:id', function(req, res){
         done(); //VERY IMPORTANT
         if(errorMakingQuery) {
           console.log('Attempted to query with', queryText);
-          console.log('Error making query');
+          console.log('Error making DELETE FROM query');
           res.sendStatus(500);
         } else {
           res.sendStatus(200);
@@ -99,7 +91,7 @@ router.put('/', function(req, res){
         done();
         if(errorMakingQuery) {
           console.log('Attempted to query with', queryText);
-          console.log('Error making query');
+          console.log('Error making UPDATE query');
           res.sendStatus(500);
         } else {
           res.sendStatus(200);

@@ -96,7 +96,7 @@ function completeTask(updateTask) {
       refreshList();
     }
   });
-}
+} //end of completeTask function
 
 // Append array to the DOM
 function appendToDom(taskList) {
@@ -108,7 +108,7 @@ function appendToDom(taskList) {
     $tr.append('<td>' + list.id + '</td>');
     $tr.append('<td>' + list.task + '</td>');
     $tr.append('<td>' + list.completionstatus + '</td>');
-    $tr.append('<td><button class="completeBtn ' + list.completionstatus + '" data-taskid="' + list.id +
+    $tr.append('<td align="center"><button class="completeBtn ' + list.completionstatus + '" data-taskid="' + list.id +
                '" data-complete="' + list.completionstatus + '">This task is now complete?</button></td>');
     $tr.append('<td><button class="deleteBtn" data-taskid="' + list.id + '">Delete</button></td>');
     $('#viewTasks').append($tr);

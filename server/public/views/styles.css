@@ -31,11 +31,12 @@ html {
   font-size: 15px;
   font-family: "Amatica SC";
   border-radius: 8px;
+  width: 100%;
+  text-align: center;
 }
 
 .yes:after {
   visibility: visible;
-  float: center;
   font-size: 25px;
   color: black;
   content: 'Hooray!';
@@ -53,11 +54,9 @@ html {
 
 .y:after {
   visibility: visible;
-  float: center;
   font-size: 25px;
   color: black;
   content: 'Hooray!';
-  margin: auto;
 }
 
 .no {
@@ -77,6 +76,10 @@ html {
 }
 
 table {
+  text-align: center;
+}
+
+td {
   text-align: center;
 }
 
